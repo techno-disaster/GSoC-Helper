@@ -5,7 +5,7 @@ autopep8==1.5.4
 Beaker==1.10.0
 beautifulsoup4==4.9.3
 blivet==3.3.0
-blivet-gui==2.2.1
+blivet-gui
 cffi==1.14.1
 chardet==3.0.4
 click==7.1.2
