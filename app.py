@@ -1,11 +1,9 @@
 import logging
 import os
 import re
-from typing import Callable
-
 from slack_bolt import App, BoltContext
-
 from strings import projects_starter, rutorrent, ideas_block
+from typing import Callable
 
 logging.basicConfig(level=logging.INFO)
 
@@ -62,6 +60,19 @@ def just_ack(logger, context):
     logger.info(f"{event_type} is ignored")
 
 
-# Start your app
-if __name__ == "__main__":
-    app.start(port=int(os.environ.get("PORT", 3000)))
+# # Start your app in debug
+# if __name__ == "__main__":
+#     app.start(port=int(os.environ.get("PORT", 3000)))
+
+# for production
+
+from flask import Flask, request
+from slack_bolt.adapter.flask import SlackRequestHandler
+
+flask_app = Flask(__name__)
+handler = SlackRequestHandler(app)
+
+
+@flask_app.route("/slack/events", methods=["POST"])
+def slack_events():
+    return handler.handle(request)
