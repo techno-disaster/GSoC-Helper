@@ -28,7 +28,7 @@ def extract_subtype(body: dict, context: BoltContext, next: Callable):
 
 @app.message(
     re.compile(
-        r"((?=.*(get|getting))(?=.*started))|(?=.*(find|found))(?=.*intresting)",
+        r"((?=.*(get|getting))(?=.*started))|(?=.*(find|found))(?=.*interesting)",
         flags=re.I | re.X | re.DOTALL,
     )
 )  # ignore case and whitespace
