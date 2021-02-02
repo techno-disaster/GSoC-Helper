@@ -1,17 +1,53 @@
 import logging
 import os
 import re
+import sqlalchemy
 from slack_bolt import App, BoltContext
+from slack_bolt.oauth.oauth_settings import OAuthSettings
+from slack_sdk.oauth.installation_store.sqlalchemy import SQLAlchemyInstallationStore
+from slack_sdk.oauth.state_store.sqlalchemy import SQLAlchemyOAuthStateStore
+from sqlalchemy.engine import Engine
 from strings import projects_starter, rutorrent, ideas_block
 from typing import Callable
 
 logging.basicConfig(level=logging.INFO)
+logging.getLogger("sqlalchemy.engine").setLevel(logging.INFO)
+logger = logging.getLogger(__name__)
 
+client_id, client_secret, signing_secret = (
+    os.environ["SLACK_CLIENT_ID"],
+    os.environ["SLACK_CLIENT_SECRET"],
+    os.environ["SLACK_SIGNING_SECRET"],
+)
+
+engine: Engine = sqlalchemy.create_engine(database_url)
+installation_store = SQLAlchemyInstallationStore(
+    client_id=client_id,
+    engine=engine,
+    logger=logger,
+)
+oauth_state_store = SQLAlchemyOAuthStateStore(
+    expiration_seconds=120,
+    engine=engine,
+    logger=logger,
+)
+
+try:
+    engine.execute("select count(*) from slack_bots")
+except Exception as e:
+    installation_store.metadata.create_all(engine)
+    oauth_state_store.metadata.create_all(engine)
 # update ngrok/production links in slash commands and enable events page
 # Initializes your app with your bot token and signing secret
 app = App(
-    token=os.environ.get("SLACK_BOT_TOKEN"),
-    signing_secret=os.environ.get("SLACK_SIGNING_SECRET"),
+    logger=logger,
+    signing_secret=signing_secret,
+    installation_store=installation_store,
+    oauth_settings=OAuthSettings(
+        client_id=client_id,
+        client_secret=client_secret,
+        state_store=oauth_state_store,
+    ),
 )
 
 
