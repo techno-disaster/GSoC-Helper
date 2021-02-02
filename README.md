@@ -43,7 +43,7 @@ pip install -r requirements.txt
 ./ngrok http 3000
 ```
 
-#### For production, use heroku. 
+#### For production, use heroku.  Heroku doesn't persist the filesystem between deploys, so the ./data directory is removed on each re-deploy, which will require you to reinstall the app in your workspace. Workaround: use a external db. credits: [#134](https://github.com/slackapi/bolt-python/issues/134#issuecomment-771580391)
 
 [1]: https://slack.dev/bolt-python/tutorial/getting-started
 [2]: https://slack.dev/bolt-python/
