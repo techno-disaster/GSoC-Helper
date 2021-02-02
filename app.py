@@ -13,7 +13,7 @@ from typing import Callable
 logging.basicConfig(level=logging.INFO)
 logging.getLogger("sqlalchemy.engine").setLevel(logging.INFO)
 logger = logging.getLogger(__name__)
-
+database_url = os.environ["DATABASE_URL"]
 client_id, client_secret, signing_secret = (
     os.environ["SLACK_CLIENT_ID"],
     os.environ["SLACK_CLIENT_SECRET"],
