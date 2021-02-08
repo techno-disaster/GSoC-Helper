@@ -1,14 +1,16 @@
 import logging
 import os
 import re
+from typing import Callable
+
 import sqlalchemy
 from slack_bolt import App, BoltContext
 from slack_bolt.oauth.oauth_settings import OAuthSettings
 from slack_sdk.oauth.installation_store.sqlalchemy import SQLAlchemyInstallationStore
 from slack_sdk.oauth.state_store.sqlalchemy import SQLAlchemyOAuthStateStore
 from sqlalchemy.engine import Engine
-from strings import projects_starter, rutorrent, ideas_block
-from typing import Callable
+
+from strings import projects_starter, rutorrent, ideas_block, sample_platform
 
 logging.basicConfig(level=logging.INFO)
 logging.getLogger("sqlalchemy.engine").setLevel(logging.INFO)
@@ -82,9 +84,16 @@ def rutorrent_command(body, respond, ack, logger):
 
 
 @app.command("/2020-ideas")
-def rekognition_command(body, respond, ack, logger):
+def ideas_command(body, respond, ack, logger):
     logger.info(body)
     respond(blocks=ideas_block)
+    ack("All the best")
+
+
+@app.command("/sample-platform")
+def sample_platform_command(body, respond, ack, logger):
+    logger.info(body)
+    respond(text=sample_platform)
     ack("All the best")
 
 
