@@ -11,7 +11,7 @@ sample_platform = "Thank you for showing interest in our project for regression 
 ideas_block = [
     {
         "type": "section",
-        "text": {"type": "mrkdwn", "text": "2020 Project ideas"},
+        "text": {"type": "mrkdwn", "text": "2021 Project ideas"},
         "accessory": {
             "type": "button",
             "text": {
@@ -19,8 +19,11 @@ ideas_block = [
                 "text": "View",
             },
             "value": "2020-ideas",
-            "url": "https://www.ccextractor.org/public:gsoc:ideas_page_for_summer_of_code_2020",
+            "url": "https://www.ccextractor.org/public:gsoc:ideas_page_for_summer_of_code_2021",
             "action_id": "button-action",
         },
     }
 ]
+
+
+

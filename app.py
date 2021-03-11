@@ -83,7 +83,7 @@ def rutorrent_command(body, respond, ack, logger):
     ack("All the best")
 
 
-@app.command("/2020-ideas")
+@app.command("/2021-ideas")
 def ideas_command(body, respond, ack, logger):
     logger.info(body)
     respond(blocks=ideas_block)
